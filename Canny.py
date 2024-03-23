@@ -24,7 +24,7 @@ def process_image_text():
   # Get image data from request (assuming multipart form data)
 
   file = app.config['UPLOAD_FOLDER']
-  if file:
+  if file: #query type 
       if app.config['TEXT'] == 'walls':
          
         class Canny(object):
@@ -50,21 +50,23 @@ def process_image_text():
 
         img_array = np.array(img1)
 
-        _,_, dst = Canny.get_edge_map(image=img_array, val=475)
+        _,_, dst = Canny.get_edge_map(image=img_array, val=475) #Canny filter
 
         # Perform Hough line detection
-        # Define parameters for Hough Transform (experiment with these values)
+        # Define parameters for Hough Transform
         rho = 1  # Distance resolution in pixels
         theta = np.pi/180  # Angle resolution in radians
         threshold = 100  # Minimum number of votes to consider a line
         min_line_length = 50  # Minimum length of line in pixels
         max_line_gap = 30  # Maximum gap between line segments
 
-        lines = cv.HoughLinesP(dst, rho, theta, threshold, minLineLength=min_line_length, maxLineGap=max_line_gap)
+        #Hough Transform Filter
+        lines = cv.HoughLinesP(dst, rho, theta, threshold, minLineLength=min_line_length, maxLineGap=max_line_gap) 
         
         z = lines[0][0]
 
-        for i in range(len(lines)):
+        #remove detected letters
+        for i in range(len(lines)): 
           if z[2] < lines[i][0][2]:
             lines[i][0][2] = 0
               
@@ -83,20 +85,13 @@ def process_image_text():
               aux = {'wallId': 'wall_' + str(i), 'position':{'start':{'x':int(x1), 'y':int(y1)}, 'end':{'x':int(x2), 'y':int(y2)}}}
 
               walls.append(aux)
-        
-        
-
-        #walls = json.dumps(list(walls))
 
         final = {'type':app.config['TEXT'],'imageId': "image", 'detectionResults': list(walls)}
 
         return jsonify(final)
 
       else:
-        reader = PdfReader(file) 
-  
-        # printing number of pages in pdf file 
-        print(len(reader.pages)) 
+        reader = PdfReader(file)   
           
         # creating a page object 
         page = reader.pages[0] 

@@ -7,7 +7,7 @@ Following the NMS step, the algorithm utilizes a technique called Hough Transfor
 
 For the sheet number extraction, it was also developed a algorithm with the function of detect the first sheet number that is present in the pdf file. 
 
-## Run the algoritm
+## Run the algorithm
 - Clone the repository and then run the following script 
 ```bash
 sh File.sh --path  <path_to_file> --text <type>

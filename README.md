@@ -5,6 +5,8 @@ Two approaches were considered, but the focus shifted towards creating a room wa
 The filtering process leaves behind thin lines along the edges, often referred to as tick lines. To address this, the algorithm applies a technique called Non-maximum Suppression (NMS). NMS works by analyzing the image in small neighborhoods (defined by a 3x3 kernel in this case). It considers four specific directions: 0 degrees (horizontal), 90 degrees (vertical), and diagonals at -45 and 45 degrees. Within each neighborhood, NMS only keeps the pixel with the highest intensity value, effectively thinning the detected edges and removing extraneous lines. 
 Following the NMS step, the algorithm utilizes a technique called Hough Transform to tackle any remaining spurious lines. The Hough Transform essentially acts like a voting mechanism. Each edge point in the image "votes" for the lines it might belong to, considering different angles and distances from the origin. The lines that receive the most votes are considered the most likely true edges, effectively mitigating the presence of incorrect lines left behind by previous steps.
 
+For the sheet number extraction, it was also developed a algorithm with the function of detect the first sheet number that is present in the pdf file. 
+
 ## Run the algoritm
 - Clone the repository and then run the following script 
 ```bash
